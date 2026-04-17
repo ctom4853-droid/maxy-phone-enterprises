@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maxy Phone Enterprise | Premium Gadgets & Electronics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Background Animation -->
+    <div class="bg-animation"></div>
+    <div class="floating-icons" id="floatingIcons"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo" onclick="showStore()">
+                <div class="logo-icon">📱</div>
+                <div class="logo-text">
+                    <span class="logo-brand">MAXY</span>
+                    <span class="logo-tagline">Phone Enterprise</span>
+                </div>
+            </a>
+            
+            <div class="nav-links">
+                <button class="cart-btn" onclick="toggleCart()">
+                    🛒 Cart <span class="cart-count" id="cartCount">0</span>
+                </button>
+                <button class="nav-btn secondary" onclick="showAdminLogin()">
+                    🔐 Admin
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cart Modal -->
+    <div class="cart-modal" id="cartModal" onclick="closeCartOutside(event)">
+        <div class="cart-sidebar" onclick="event.stopPropagation()">
+            <div class="cart-header">
+                <h2>🛒 Your Cart</h2>
+                <button class="close-cart" onclick="toggleCart()">✕</button>
+            </div>
+            
+            <div id="cartItems">
+                <div class="cart-empty">
+                    <div class="cart-empty-icon">🛒</div>
+                    <p>Your cart is empty</p>
+                    <p style="font-size: 0.9rem; margin-top: 10px;">Add products to get started</p>
+                </div>
+            </div>
+            
+            <div class="cart-summary" id="cartSummary" style="display: none;">
+                <div class="cart-total-row">
+                    <span>Items:</span>
+                    <span id="cartItemCount">0</span>
+                </div>
+                <div class="cart-total-row total">
+                    <span>Total:</span>
+                    <span id="cartTotal">$0</span>
+                </div>
+                <button class="checkout-btn" onclick="checkoutWhatsApp()">
+                    💬 Order via WhatsApp
+                </button>
+                <button class="clear-cart-btn" onclick="clearCart()">
+                    🗑️ Clear Cart
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content" id="mainContent">
+        
+        <!-- Hero Section -->
+        <section class="hero" id="storeView">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    ⚡ Premium Electronics
+                </div>
+                <h1>Premium Tech at <span>Best Prices</span></h1>
+                <p>Discover the latest smartphones, laptops, gaming consoles, and accessories. Add to cart and order via WhatsApp for fastest delivery.</p>
+                
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <div class="hero-stat-value" id="statProducts">0</div>
+                        <div class="hero-stat-label">Products</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-value">24/7</div>
+                        <div class="hero-stat-label">Support</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="hero-stat-value">Same</div>
+                        <div class="hero-stat-label">Day Delivery</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filter Section -->
+        <section class="filter-section">
+            <div class="filter-container">
+                <h3 class="filter-title">Browse Categories</h3>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" onclick="filterProducts('all')">
+                        📱 All Products
+                    </button>
+                    <button class="filter-btn" onclick="filterProducts('phones')">
+                        📱 Phones
+                    </button>
+                    <button class="filter-btn" onclick="filterProducts('laptops')">
+                        💻 Laptops
+                    </button>
+                    <button class="filter-btn" onclick="filterProducts('gaming')">
+                        🎮 Gaming
+                    </button>
+                    <button class="filter-btn" onclick="filterProducts('accessories')">
+                        🎧 Accessories
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <section class="products-section">
+            <div class="section-header">
+                <h2 class="section-title">Featured Products</h2>
+                <span class="section-count" id="productCount">Showing all products</span>
+            </div>
+            
+            <div class="products-grid" id="productsGrid">
+                <!-- Products injected here -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Admin Login Modal -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="login-modal">
+            <button class="close-modal" onclick="closeAdminLogin()">✕</button>
+            <div class="login-icon">🔐</div>
+            <h2>Admin Access</h2>
+            <p>Enter your password to manage inventory</p>
+            
+            <input 
+                type="password" 
+                id="adminPassword" 
+                class="login-input" 
+                placeholder="Enter password"
+                onkeypress="if(event.key==='Enter')checkPassword()"
+            >
+            
+            <button class="login-btn" onclick="checkPassword()">
+                Unlock Panel
+            </button>
+            
+            <div class="login-error" id="loginError">
+                ❌ Incorrect password
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-header">
+            <div>
+                <h2 class="admin-title">Admin <span>Dashboard</span></h2>
+                <p style="color: var(--text-muted); margin-top: 5px;">Manage your inventory and track sales</p>
+            </div>
+            <button class="logout-btn" onclick="logout()">
+                🔒 Logout
+            </button>
+        </div>
+
+        <div class="admin-form">
+            <h3 style="margin-bottom: 25px; font-size: 1.3rem;">➕ Add New Product</h3>
+            
+            <form id="productForm" onsubmit="handleAddProduct(event)">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Category <span>*</span></label>
+                        <select id="prodCategory" class="form-input" required onchange="updateBrandOptions()">
+                            <option value="">Select Category</option>
+                            <option value="phones">📱 Smartphones</option>
+                            <option value="laptops">💻 Laptops</option>
+                            <option value="gaming">🎮 Gaming Consoles</option>
+                            <option value="accessories">🎧 Accessories</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Brand <span>*</span></label>
+                        <select id="prodBrand" class="form-input" required>
+                            <option value="">Select Brand</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Product Name <span>*</span></label>
+                        <input type="text" id="prodName" class="form-input" placeholder="e.g., iPhone 15 Pro Max" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Price (₦) <span>*</span></label>
+                        <input type="number" id="prodPrice" class="form-input" placeholder="999" min="1" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Stock Quantity <span>*</span></label>
+                        <input type="number" id="prodStock" class="form-input" placeholder="10" min="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Specifications</label>
+                        <input type="text" id="prodSpecs" class="form-input" placeholder="e.g., 256GB, 8GB RAM, 5000mAh">
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>Description</label>
+                        <textarea id="prodDesc" class="form-input" rows="3" placeholder="Product description..."></textarea>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>Product Image</label>
+                        <div class="file-input-wrapper">
+                            <input type="file" id="prodImage" accept="image/*" onchange="handleImagePreview(this)">
+                            <label for="prodImage" class="file-input-label" id="fileLabel">
+                                📷 Click to upload product image<br>
+                                <small>Recommended: 800x600px, JPG or PNG</small>
+                            </label>
+                        </div>
+                        <img id="imagePreview" class="image-preview" alt="Preview">
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    <span>➕</span> Add Product to Inventory
+                </button>
+            </form>
+        </div>
+
+        <div class="inventory-list">
+            <div class="inventory-header">
+                <h3>Current Inventory</h3>
+                <span class="inventory-count" id="inventoryCount">0 products</span>
+            </div>
+            <div class="inventory-grid" id="inventoryGrid">
+                <!-- Inventory items here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>📱 MAXY Phone Enterprise</h3>
+                <p>Your trusted source for premium gadgets in nigeria, benin city. We deliver quality products at competitive prices with exceptional customer service.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <a href="#" onclick="showStore()">Store</a>
+                <a href="#" onclick="filterProducts('phones')">Phones</a>
+                <a href="#" onclick="filterProducts('laptops')">Laptops</a>
+                <a href="#" onclick="filterProducts('gaming')">Gaming</a>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p>📍 benin city, nigeria</p>
+                <p>📱 +234 7076257513</p>
+                <p>✉️ info@maxyenterprise.com</p>
+                <p><a href="https://wa.me/2348124146689" target="_blank">💬 WhatsApp Business</a></p>
+            </div>
+            <div class="footer-section">
+                <h3>Business Hours</h3>
+                <p>Monday - Friday: 8AM - 8PM</p>
+                <p>Saturday: 9AM - 6PM</p>
+                <p>Sunday: 12PM - 5PM</p>
+                <p>🚀 Same day delivery available</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Maxy Phone Enterprise. All rights reserved. | Premium gadget Dealer</p>
+        </div>
+    </footer>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <span id="toastIcon">✓</span>
+        <span id="toastMessage">Success!</span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
