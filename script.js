@@ -552,3 +552,21 @@ document.addEventListener('keydown', (e) => {
         if (cartModal.classList.contains('show')) toggleCart();
     }
 });
+// Expose functions to HTML buttons
+window.showAdminLogin = showAdminLogin;
+window.closeAdminLogin = closeAdminLogin;
+window.checkPassword = checkPassword;
+window.showStore = showStore;
+window.logout = logout;
+window.toggleCart = toggleCart;
+window.closeCartOutside = closeCartOutside;
+window.filterProducts = filterProducts;
+window.addToCart = addToCart;
+window.removeFromCart = removeFromCart;
+window.clearCart = clearCart;
+window.checkoutWhatsApp = checkoutWhatsApp;
+window.sellOne = sellOne;
+window.deleteProduct = deleteProduct;
+window.updateBrandOptions = updateBrandOptions;
+window.handleImagePreview = handleImagePreview;
+window.handleAddProduct = handleAddProduct;
